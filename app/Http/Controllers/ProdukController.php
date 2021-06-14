@@ -13,6 +13,12 @@ class ProdukController extends Controller
     {
         $input = $request->all();
 
+        // Example Call Another API
+//        $images = Http::get("https://foodish-api.herokuapp.com/api/images/pizza");
+//        $jsonResult = json_decode($images->body());
+//        $image = $jsonResult->image;
+        // End
+
         $fileName = Str::random(5) . '.' . $request->file('foto')->getClientOriginalExtension();
         $request->file('foto')->storeAs('', $fileName, 'minio');
 
