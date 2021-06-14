@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class ProdukController extends Controller
 {
     public function store(Request $request)
     {
-        $result = Produk::create($request->all());
+        $input = $request->all();
+
+        $fileName = Str::random(5) . '.' . $request->file('foto')->getClientOriginalExtension();
+        $request->file('foto')->storeAs('', $fileName, 'minio');
+
+        $input['foto'] = env('MINIO_ENDPOINT') . '/' . env('MINIO_BUCKET') . '/' . $fileName;
+        $result = Produk::create($input);
 
         if ($result) {
             return response()->json([

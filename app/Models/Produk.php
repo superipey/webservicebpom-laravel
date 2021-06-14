@@ -15,6 +15,7 @@ class Produk extends Model
         'nama_produk',
         'jenis_produk',
         'jumlah_stok',
-        'harga'
+        'harga',
+        'foto'
     ];
 }
